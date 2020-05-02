@@ -23,15 +23,15 @@ void main() {
     vec3 FragPos = vec3(model_matrix * vec4(vertex_position, 1.0));
     
     //Calculate ambient = intensity * ambient reflection coefficient
-    ambient = light_color
+    ambient = light_color * light_ambient;
     
-    //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)^n
+    //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     vec3 normal = normalize(vertex_normal);
     vec3 lightDirection = normalize(light_position - FragPos);
     diffuse = light_color * max(dot(normal, lightDirection), 0.0);
     
-    //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)
+    //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
     vec3 reflectDir = reflect(-lightDirection, normal);  
     vec3 viewDirection = normalize(camera_position - FragPos);
-    specular = pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
+    specular = light_color * pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
 }
