@@ -32,7 +32,7 @@ void main() {
     diffuse = light_color * normalLight;
     
     //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
-    vec3 reflectDirection = 2 * (dot(normalLight, * normal)) - lightDirection;
+    vec3 reflectDirection = 2 * max(dot(normalLight * normal), 0.0) - lightDirection;
     vec3 viewDirection = normalize(camera_position - FragPos);
     specular = light_color * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
 }
