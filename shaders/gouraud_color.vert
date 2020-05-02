@@ -28,7 +28,7 @@ void main() {
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     vec3 normal = normalize(vertex_normal);
     vec3 lightDirection = normalize(light_position - FragPos);
-    diffuse = light_color * max(dot(normal, lightDir), 0.0);
+    diffuse = light_color * max(dot(normal, lightDirection), 0.0);
     
     //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
     vec3 reflectDirection = reflect(-lightDirection, normal);  
