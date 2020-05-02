@@ -116,7 +116,7 @@ class GlApp {
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
             // NOTE: you need to properly select shader here
-            let selected_shader = 'gouraud_color';
+            let selected_shader = this.scene.models[i].shader;
             this.gl.useProgram(this.shader[selected_shader].program);
 
             // transform model to proper position, size, and orientation
