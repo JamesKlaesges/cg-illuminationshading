@@ -28,8 +28,8 @@ void main() {
     //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
     vec3 reflectDirection = reflect(-lightDirection, normal);  
     vec3 viewDirection = normalize(camera_position - frag_pos);
-    vec3 specular = light_color *material_specular * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
+    vec3 specular = light_color * material_specular * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
     
-    vec3 result = (ambient + diffuse + specular) * material_color;
+    vec3 result = (ambient + diffuse + specular);
     FragColor = vec4(result, 1.0);
 }
