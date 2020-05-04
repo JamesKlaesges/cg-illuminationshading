@@ -17,5 +17,5 @@ void main() {
     
     frag_pos = vec3(model_matrix * vec4(vertex_position, 1));
     
-    frag_normal = vec3(model_matrix * vec4(vertex_normal, 1));
+    frag_normal = normalize(vec3(model_matrix * vec4(vertex_normal, 1)));
 }
