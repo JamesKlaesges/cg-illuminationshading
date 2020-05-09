@@ -126,8 +126,8 @@ class GlApp {
 		if (selected_shader == 'gouraud_color')
 		{
 			this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
-			this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights.position)
-			this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights.color)
+			this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
+			this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights[0].color)
 			this.gl.uniform3fv(this.shader[selected_shader].camera_position, this.scene.camera.position)
 			this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
 			this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
