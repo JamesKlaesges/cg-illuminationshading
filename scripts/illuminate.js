@@ -112,7 +112,7 @@ class GlApp {
     Render() {
         // delete previous frame (reset both framebuffer and z-buffer)
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-        
+        console.log(scene)
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
             // NOTE: you need to properly select shader here
