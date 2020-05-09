@@ -116,7 +116,8 @@ class GlApp {
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
             // NOTE: you need to properly select shader here
-            let selected_shader = this.algorithm + "_" + this.models[i].shader;
+            var selected_shader = this.algorithm + "_" + this.models[i].shader;
+	    console.log(selected_shader)
             this.gl.useProgram(this.shader[selected_shader].program);
 
             // transform model to proper position, size, and orientation
