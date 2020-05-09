@@ -171,7 +171,7 @@ class GlApp {
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array['sphere'].face_index_count, this.gl.UNSIGNED_SHORT, 0);
             this.gl.bindVertexArray(null);
         }
-	    LoadColorShader(selected_shader + ".vert", selected_shader + ".frag", selected_shader) {
+	    LoadColorShader(selected_shader + ".vert", selected_shader + ".frag", selected_shader)
     }
 
     UpdateScene(scene) {
