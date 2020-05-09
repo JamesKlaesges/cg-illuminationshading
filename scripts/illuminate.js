@@ -123,7 +123,7 @@ class GlApp {
             this.gl.useProgram(this.shader[selected_shader].program);
 		
 		//Pass data into the shader
-		if (selected_shader == 'gouraud_color')
+		if (selected_shader == 'gouraud_color' || selected_shader == 'phong_color')
 		{
 			this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
 			this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
@@ -132,8 +132,6 @@ class GlApp {
 			this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
 			this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
 		}
-		//in vec3 vertex_position;
-		//in vec3 vertex_normal;
 		
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
