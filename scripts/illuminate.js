@@ -299,13 +299,6 @@ class GlApp {
         }
     }
 
-
-
-
-
-
-
-    /*
     LoadColorShader(vs_source, fs_source, program_name) {
         let vertex_shader = this.CompileShader(vs_source, this.gl.VERTEX_SHADER);
         let fragment_shader = this.CompileShader(fs_source, this.gl.FRAGMENT_SHADER);
@@ -452,5 +445,5 @@ class GlApp {
             alert('An error occurred linking the shader program.');
         }
     }
-    */
+    
 }
