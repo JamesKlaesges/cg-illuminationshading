@@ -116,10 +116,25 @@ class GlApp {
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
             // NOTE: you need to properly select shader here
+		
+	    //Get selected shader
             var selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
-	    console.log(selected_shader);
+		
             this.gl.useProgram(this.shader[selected_shader].program);
-
+		
+		//Pass data into the shader
+		if (selected_shader == 'gouraud_color')
+		{
+			this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
+			this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights.position)
+			this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights.color)
+			this.gl.uniform3fv(this.shader[selected_shader].camera_position, this.scene.camera.position)
+			this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
+			this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
+		}
+		//in vec3 vertex_position;
+		//in vec3 vertex_normal;
+		
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
             glMatrix.mat4.translate(this.model_matrix, this.model_matrix, this.scene.models[i].center);
