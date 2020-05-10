@@ -221,10 +221,10 @@ class GlApp {
 
     LoadAllShaders(shaders) {
         this.LoadColorShader(shaders[0], shaders[1], 'gouraud_color');
-        this.LoadShader(shaders[2], shaders[3], 'gouraud_texture');
+        this.LoadTextureShader(shaders[2], shaders[3], 'gouraud_texture');
         this.LoadColorShader(shaders[4], shaders[5], 'phong_color');
-        this.LoadShader(shaders[6], shaders[7], 'phong_texture');
-        this.LoadShader(shaders[8], shaders[9], 'emissive');
+        this.LoadTextureShader(shaders[6], shaders[7], 'phong_texture');
+        this.LoadEmissiveShader(shaders[8], shaders[9], 'emissive');
 
         this.InitializeGlApp();
     }
