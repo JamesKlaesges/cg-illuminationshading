@@ -91,7 +91,8 @@ class GlApp {
         let texture = this.gl.createTexture();
 
         // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
-        // ...
+        // 
+	//this.gl.bindTexture(gl.TEXTURE_2D, texture);
 
         // download the actual image
         let image = new Image();
