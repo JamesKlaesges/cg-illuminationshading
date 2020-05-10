@@ -13,9 +13,10 @@ out vec4 FragColor;
 
 void main() {
     
-    ambient = max(ambient * material_color, 0.0)
-    diffuse = max(diffuse * material_color, 0.0)
-    specular = max(specular * material_specular, 0.0)
-    vec3 result = (ambient + diffuse + specular);
+    ambientCap = max(ambient * material_color, 0.0);
+    diffuseCap = max(diffuse * material_color, 0.0);
+    specularCap = max(specular * material_specular, 0.0);
+    
+    vec3 result = (ambientCap + diffuseCap + specularCap);
     FragColor = vec4(result, 1.0);
 }
