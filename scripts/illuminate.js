@@ -133,7 +133,7 @@ class GlApp {
             glMatrix.mat4.rotateX(this.model_matrix, this.model_matrix, this.scene.models[i].rotate_x);
             glMatrix.mat4.scale(this.model_matrix, this.model_matrix, this.scene.models[i].size);
 
-	    //Pass data into the shader uniform variables
+	    //Pass data from the scene into the shader uniform variables
 	    this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
 	    this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
 	    this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights[0].color)
