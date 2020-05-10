@@ -150,8 +150,6 @@ class GlApp {
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
             this.gl.bindVertexArray(null);
 
-	    console.log(this.shader);
-	    this.LoadColorShader(selected_shader+"_vs", selected_shader+"_fs", selected_shader);
         }
 
         // draw all light sources
