@@ -126,15 +126,15 @@ class GlApp {
             this.gl.useProgram(this.shader[selected_shader].program);
 		
 	    //Pass data into the shader
-	    //if (selected_shader == 'gouraud_color' || selected_shader == 'phong_color')
-	    //{
+	    if (selected_shader == 'gouraud_color' || selected_shader == 'phong_color')
+	    {
 		    this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
 		    this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
 		    this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights[0].color)
 		    this.gl.uniform3fv(this.shader[selected_shader].camera_position, this.scene.camera.position)
 		    this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
 		    this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
-	    //}
+	    }
 		
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
@@ -220,9 +220,9 @@ class GlApp {
     }
 
     LoadAllShaders(shaders) {
-        this.LoadShader(shaders[0], shaders[1], 'gouraud_color');
+        this.LoadColorShader(shaders[0], shaders[1], 'gouraud_color');
         this.LoadShader(shaders[2], shaders[3], 'gouraud_texture');
-        this.LoadShader(shaders[4], shaders[5], 'phong_color');
+        this.LoadColorShader(shaders[4], shaders[5], 'phong_color');
         this.LoadShader(shaders[6], shaders[7], 'phong_texture');
         this.LoadShader(shaders[8], shaders[9], 'emissive');
 
