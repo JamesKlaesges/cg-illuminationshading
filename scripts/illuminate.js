@@ -125,17 +125,6 @@ class GlApp {
 		
             this.gl.useProgram(this.shader[selected_shader].program);
 		
-	    //Pass data into the shader
-	    if (selected_shader == 'gouraud_color' || selected_shader == 'phong_color')
-	    {
-		    this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
-		    this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
-		    this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights[0].color)
-		    this.gl.uniform3fv(this.shader[selected_shader].camera_position, this.scene.camera.position)
-		    this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
-		    this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
-	    }
-		
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
             glMatrix.mat4.translate(this.model_matrix, this.model_matrix, this.scene.models[i].center);
@@ -144,6 +133,13 @@ class GlApp {
             glMatrix.mat4.rotateX(this.model_matrix, this.model_matrix, this.scene.models[i].rotate_x);
             glMatrix.mat4.scale(this.model_matrix, this.model_matrix, this.scene.models[i].size);
 
+	    //Pass data into the shader uniform variables
+	    this.gl.uniform3fv(this.shader[selected_shader].light_ambient, this.scene.light.ambient)
+	    this.gl.uniform3fv(this.shader[selected_shader].light_position, this.scene.light.point_lights[0].position)
+	    this.gl.uniform3fv(this.shader[selected_shader].light_color, this.scene.light.point_lights[0].color)
+	    this.gl.uniform3fv(this.shader[selected_shader].camera_position, this.scene.camera.position)
+	    this.gl.uniform1f(this.material_shininess, this.scene.models[i].material.shininess);
+	    this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
             this.gl.uniform3fv(this.shader[selected_shader].uniform.material_color, this.scene.models[i].material.color);
             this.gl.uniformMatrix4fv(this.shader[selected_shader].uniform.projection_matrix, false, this.projection_matrix);
             this.gl.uniformMatrix4fv(this.shader[selected_shader].uniform.view_matrix, false, this.view_matrix);
