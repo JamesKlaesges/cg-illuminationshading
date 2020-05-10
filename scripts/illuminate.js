@@ -108,6 +108,8 @@ class GlApp {
 
     UpdateTexture(texture, image_element) {
         // TODO: update image for specified texture
+	console.log(image_element)
+	//glTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, image_element);
     }
 
     Render() {
