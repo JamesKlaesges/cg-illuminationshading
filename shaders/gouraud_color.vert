@@ -34,4 +34,9 @@ void main() {
     vec3 reflectDirection = reflect(-lightDirection, normal);  
     vec3 viewDirection = normalize(camera_position - position);
     specular = light_color * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
+    
+    //Cap colors
+    ambient = max(ambient, 0.0);
+    diffuse = max(diffuse, 0.0);
+    specular = max(specular, 0.0);
 }
