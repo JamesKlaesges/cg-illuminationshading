@@ -34,6 +34,6 @@ void main() {
     vec3 ambientCap = max(ambient, 0.0);
     vec3 diffuseCap = max(diffuse, 0.0);
     vec3 specularCap = max(specular, 0.0);
-    vec3 result = (ambientCap + diffuseCap + specularCap);
-    FragColor = vec4(result, 1.0) * texture(image, frag_texcoord);
+    vec3 result = (ambientCap + diffuseCap);
+    FragColor = vec4(result, 1.0) * texture(image, frag_texcoord)  + vec4(specCap, 1.0);
 }
