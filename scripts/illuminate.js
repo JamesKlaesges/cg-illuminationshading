@@ -124,7 +124,7 @@ class GlApp {
             var selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
 		
             this.gl.useProgram(this.shader[selected_shader].program);
-	    console.log(this.shader[selected_shader].program);
+	    console.log(selected_shader);
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
             glMatrix.mat4.translate(this.model_matrix, this.model_matrix, this.scene.models[i].center);
