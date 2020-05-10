@@ -151,7 +151,7 @@ class GlApp {
             this.gl.bindVertexArray(null);
 
 	    console.log(this.shader);
-	    this.LoadColorShader(selected_shader, selected_shader, selected_shader);
+	    this.LoadColorShader(selected_shader+"_vs", selected_shader+"_fs", selected_shader);
         }
 
         // draw all light sources
