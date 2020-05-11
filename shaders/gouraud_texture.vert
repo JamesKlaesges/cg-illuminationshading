@@ -26,7 +26,7 @@ void main() {
     vec3 position = vec3(model_matrix * view_matrix * vec4(vertex_position, 1));
     
     //Calculate ambient = intensity * ambient reflection coefficient
-    ambient = light_color;
+    ambient = light_ambient;
     
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     vec3 normal = normalize(vertex_normal);
