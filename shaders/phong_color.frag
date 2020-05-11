@@ -21,7 +21,7 @@ void main() {
     vec3 ambient = material_color * light_ambient;
     
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
-    vec3 normal = normalize(frag_normal);
+    vec3 normal = frag_normal;
     vec3 lightDirection = normalize(light_position - frag_pos);
     vec3 diffuse = light_color * material_color * max(dot(normal, lightDirection), 0.0);
     
