@@ -18,7 +18,7 @@ out vec4 FragColor;
 void main() {
     
     //Calculate ambient = intensity * ambient reflection coefficient
-    vec3 ambient = max(material_color * light_color, 0.0);
+    vec3 ambient = max(material_color * light_ambient, 0.0);
     
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     vec3 normal = normalize(frag_normal);
