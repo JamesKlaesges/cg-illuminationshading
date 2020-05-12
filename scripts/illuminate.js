@@ -92,10 +92,20 @@ class GlApp {
 
         // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
         // 
-	data = [255, 255, 255, 255];
+	
+	//Bind texture
 	this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
-	this.glTexImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+	    
+	//Set parameters
+	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);	
+	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
+	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
 
+	//Upload temporary array
+	data = [255, 255, 255, 255];
+	this.gl.TexImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+	    
         // download the actual image
         let image = new Image();
         image.crossOrigin = 'anonymous';
@@ -113,7 +123,11 @@ class GlApp {
 	console.log(image_element);
 	console.log(texture);
 	    
-	//glTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, image_element.width, image_element.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, image_element);
+	//Update texture with image
+	this.gl.TexImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, image_element.width, image_element.height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
+    	
+	//Generate mipmap
+	this.gl.GenerateMipmap(this.gl.TEXTURE_2D);
     }
 
     Render() {
