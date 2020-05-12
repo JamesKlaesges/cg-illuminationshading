@@ -141,7 +141,6 @@ class GlApp {
             this.gl.useProgram(this.shader[selected_shader].program);
             console.log(selected_shader);
             console.log(this.shader[selected_shader]);
-            console.log(this.gl.getError());
 
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
