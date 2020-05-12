@@ -87,24 +87,22 @@ class GlApp {
     }
 
     InitializeTexture(image_url) {
-        // create a texture, and upload a temporary 1px white RGBA array [255,255,255,255]
-        let texture = this.gl.createTexture();
+    // create a texture, and upload a temporary 1px white RGBA array [255,255,255,255]
+    let texture = this.gl.createTexture();
 
-        // TODO: set texture parameters and upload a temporary 1px white RGBA array [255,255,255,255]
-        // 
 	console.log(image_url);	
 	//Bind texture
 	this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
 	    
 	//Set parameters
-	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);	
-	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
-	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
-	this.gl.TexParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);	
+	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.REPEAT);
+	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
+	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
 
-	//Upload temporary array
-	data = [255, 255, 255, 255];
-	this.gl.TexImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
+	// Upload temporary array 1px white array
+	let data = new Uint8Array([255, 255, 255, 255]);
+	this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, data);
 	    
         // download the actual image
         let image = new Image();
@@ -112,6 +110,8 @@ class GlApp {
         image.addEventListener('load', (event) => {
             // once image is downloaded, update the texture image
             this.UpdateTexture(texture, image);
+            // NEED TO CALL RENDER HERE TO NOT CLEAR OUT ALL BUT ONE TEXTURE
+            this.Render();
         }, false);
         image.src = image_url;
 
@@ -119,34 +119,30 @@ class GlApp {
     }
 
     UpdateTexture(texture, image_element) {
-        // TODO: update image for specified texture
 	console.log(image_element);
 	console.log(texture);
-	    
-	//Update texture with image
-	this.gl.TexImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, image_element.width, image_element.height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
-    	
-	//Generate mipmap
-	this.gl.GenerateMipmap(this.gl.TEXTURE_2D);
-    }
+    
+    // bind texture
+    this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
 
+	// Upload image to GPU as texture
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image_element);
+    
+    }
     Render() {
         // delete previous frame (reset both framebuffer and z-buffer)
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
         console.log(scene);
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
-            // NOTE: you need to properly select shader here
 		
-	    //Get selected shader
+	        //Get selected shader
             var selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
-            // var selected_shader = "emissive";
             this.gl.useProgram(this.shader[selected_shader].program);
-		
-	    //console.log(selected_shader);
-	    //console.log(this.shader[selected_shader]);
-	    //console.log(this.gl.getError());
-		
+            console.log(selected_shader);
+            console.log(this.shader[selected_shader]);
+            console.log(this.gl.getError());
+
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
             glMatrix.mat4.translate(this.model_matrix, this.model_matrix, this.scene.models[i].center);
@@ -155,17 +151,27 @@ class GlApp {
             glMatrix.mat4.rotateX(this.model_matrix, this.model_matrix, this.scene.models[i].rotate_x);
             glMatrix.mat4.scale(this.model_matrix, this.model_matrix, this.scene.models[i].size);
 
-	    //Pass data from the scene into the shader uniform variables
-	    this.gl.uniform3fv(this.shader[selected_shader].uniform.light_ambient, this.scene.light.ambient)
-	    this.gl.uniform3fv(this.shader[selected_shader].uniform.light_position, this.scene.light.point_lights[0].position)
-	    this.gl.uniform3fv(this.shader[selected_shader].uniform.light_color, this.scene.light.point_lights[0].color)
-	    this.gl.uniform3fv(this.shader[selected_shader].uniform.camera_position, this.scene.camera.position)
-	    this.gl.uniform1f(this.shader[selected_shader].uniform.material_shininess, this.scene.models[i].material.shininess);
-	    this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
+            //Pass data from the scene into the shader uniform variables
+            this.gl.uniform3fv(this.shader[selected_shader].uniform.light_ambient, this.scene.light.ambient)
+            this.gl.uniform3fv(this.shader[selected_shader].uniform.light_position, this.scene.light.point_lights[0].position)
+            this.gl.uniform3fv(this.shader[selected_shader].uniform.light_color, this.scene.light.point_lights[0].color)
+            this.gl.uniform3fv(this.shader[selected_shader].uniform.camera_position, this.scene.camera.position)
+            this.gl.uniform1f(this.shader[selected_shader].uniform.material_shininess, this.scene.models[i].material.shininess);
+            this.gl.uniform3fv(this.shader[selected_shader].uniform.material_specular, this.scene.models[i].material.specular);
             this.gl.uniform3fv(this.shader[selected_shader].uniform.material_color, this.scene.models[i].material.color);
             this.gl.uniformMatrix4fv(this.shader[selected_shader].uniform.projection_matrix, false, this.projection_matrix);
             this.gl.uniformMatrix4fv(this.shader[selected_shader].uniform.view_matrix, false, this.view_matrix);
             this.gl.uniformMatrix4fv(this.shader[selected_shader].uniform.model_matrix, false, this.model_matrix);
+
+            // need to handle shader and texture mapping here
+            // if shader is color, don't need to do anything (handled like scene from index.html)
+            // if shader is texture, have to bind specific texture and pass data like block of code above
+            // (i.e., specify uniform vec2 texture_scale for vertex shader)
+
+            if(this.scene.models[i].shader === 'texture') {
+                this.gl.bindTexture(this.gl.TEXTURE_2D, this.scene.models[i].texture.id);
+                this.gl.uniform2fv(this.shader[selected_shader].uniform.texture_scale, this.scene.models[i].texture.scale);
+            }
 
             this.gl.bindVertexArray(this.vertex_array[this.scene.models[i].type]);
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
