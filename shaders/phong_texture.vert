@@ -1,27 +1,39 @@
 #version 300 es
 
-precision highp float;
+precision mediump float;
 
-in vec3 vertex_position;
-in vec3 vertex_normal;
-in vec2 vertex_texcoord;
+in vec3 frag_pos;
+in vec3 frag_normal;
+in vec2 frag_texcoord;
 
-uniform vec2 texture_scale;
-uniform mat4 model_matrix;
-uniform mat4 view_matrix;
-uniform mat4 projection_matrix;
+uniform vec3 light_ambient;
+uniform vec3 light_position;
+uniform vec3 light_color;
+uniform vec3 camera_position;
+uniform vec3 material_color;      // Ka and Kd
+uniform vec3 material_specular;   // Ks
+uniform float material_shininess; // n
+uniform sampler2D image;          // use in conjunction with Ka and Kd
 
-out vec3 frag_pos;
-out vec3 frag_normal;
-out vec2 frag_texcoord;
+out vec4 FragColor;
 
 void main() {
-    gl_Position = projection_matrix * view_matrix * model_matrix * vec4(vertex_position, 1.0);
-    frag_texcoord = vertex_texcoord * texture_scale;
+    //Calculate ambient = intensity * ambient reflection coefficient
+    vec3 ambient = max(material_color * light_ambient, 0.0);
     
-    frag_pos = vec3(model_matrix * view_matrix * vec4(vertex_position, 1));
+    //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
+    vec3 normal = normalize(frag_normal);
+    vec3 lightDirection = normalize(light_position - frag_pos);
+    vec3 diffuse = light_color * material_color * max(dot(normal, lightDirection), 0.0);
     
-    // to transform normal, multiply inverse of transpose of upper-left 3x3 of model matrix by vertex normal
-    frag_normal = normalize(vec3(inverse(transpose(mat3(model_matrix))) * vertex_normal));
-
+    //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
+    vec3 reflectDirection = reflect(-lightDirection, normal);  
+    vec3 viewDirection = normalize(camera_position - frag_pos);
+    vec3 specular = light_color * material_specular * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
+    
+    vec3 ambientCap = max(ambient, 0.0);
+    vec3 diffuseCap = max(diffuse, 0.0);
+    vec3 specularCap = max(specular, 0.0);
+    vec3 result = (ambientCap + diffuseCap);
+    FragColor = vec4(result, 1.0) * texture(image, frag_texcoord)  + vec4(specularCap, 1.0);
 }
