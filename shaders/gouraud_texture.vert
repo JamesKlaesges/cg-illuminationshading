@@ -31,14 +31,14 @@ void main() {
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
     vec3 normal = normalize(vertex_normal);
-    for(let i = 0; i < light_color.length; i++)
+    for (let i = 0; i < light_color.length; i++)
     {
         vec3 lightDirection = normalize(light_position[i] - position);
-        diffuse = diffuse + (light_color[i] * max(dot(normal, lightDirection), 0.0));
+        diffuse = diffuse + light_color[i] * max(dot(normal, lightDirection), 0.0);
         
         vec3 reflectDirection = normalize(reflect(-lightDirection, normal)); 
         vec3 viewDirection = normalize(camera_position - position);
-        specular = specular + (light_color[i] * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess));
+        specular = specular + light_color[i] * pow(max(dot(viewDirection, reflectDirection), 0.0), material_shininess);
         
     }
     
