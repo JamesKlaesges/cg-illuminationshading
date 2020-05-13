@@ -155,7 +155,6 @@ class GlApp {
 	    this.gl.uniform1i(this.shader[selected_shader].uniform.lightCount, this.scene.light.point_lights.length);
 	    for (let j = 0; j < this.scene.light.point_lights.length; j ++)
 	    {
-		    //glGetUniformLocation(ObjectShader.Program, ("pointLight[" + number + "].position").c_str())
 		let number = j.toString();
 		this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_position[number]"), this.scene.light.point_lights[j].position);
             	this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_color[number]"), this.scene.light.point_lights[j].color);
