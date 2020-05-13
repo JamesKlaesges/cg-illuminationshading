@@ -6,6 +6,7 @@ in vec3 vertex_position;
 in vec3 vertex_normal;
 
 uniform vec3 light_ambient;
+uniform int lightCount;
 uniform vec3 light_position[lightCount];
 uniform vec3 light_color[lightCount];
 uniform vec3 camera_position;
