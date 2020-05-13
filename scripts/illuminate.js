@@ -157,7 +157,7 @@ class GlApp {
 	    {
 		    //glGetUniformLocation(ObjectShader.Program, ("pointLight[" + number + "].position").c_str())
 		let number = j.toString();
-		this.gl.uniform3fv(this.gl.GetUniformLocation(this.shader[selected_shader].program, "light_position[number]"), this.scene.light.point_lights[j].position);
+		this.gl.uniform3fv(this.gl.getUniformLocation(this.shader[selected_shader].program, "light_position[number]"), this.scene.light.point_lights[j].position);
             	this.gl.uniform3fv(this.shader[selected_shader].uniform.light_color[j], this.scene.light.point_lights[j].color);
 	    }
 	    this.gl.uniform3fv(this.shader[selected_shader].uniform.camera_position, this.scene.camera.position);
