@@ -7,8 +7,9 @@ in vec3 vertex_normal;
 in vec2 vertex_texcoord;
 
 uniform vec3 light_ambient;
-uniform vec3 light_position[];
-uniform vec3 light_color[];
+uniform int lightCount;
+uniform vec3 light_position[10];
+uniform vec3 light_color[10];
 uniform vec3 camera_position;
 uniform float material_shininess;
 uniform vec2 texture_scale;
@@ -31,7 +32,7 @@ void main() {
     //Calculate diffuse = intensity_point * diffuse reflection coefficient * (normalized surface normal * normalized light direction)
     //Calculate specular = intensity_point * specular reflection coefficient * (normalized reflected light direction * normalized view direction)^n
     vec3 normal = normalize(vertex_normal);
-    for (let i = 0; i < light_color.length; i++)
+    for (int i = 0; i < lightCount; i++)
     {
         vec3 lightDirection = normalize(light_position[i] - position);
         diffuse = diffuse + light_color[i] * max(dot(normal, lightDirection), 0.0);
