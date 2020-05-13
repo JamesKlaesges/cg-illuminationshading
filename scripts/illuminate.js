@@ -140,7 +140,7 @@ class GlApp {
             var selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
             this.gl.useProgram(this.shader[selected_shader].program);
             console.log(selected_shader);
-            console.log(this.shader[selected_shader]);
+            
 
             // transform model to proper position, size, and orientation
             glMatrix.mat4.identity(this.model_matrix);
@@ -180,6 +180,8 @@ class GlApp {
             this.gl.bindVertexArray(this.vertex_array[this.scene.models[i].type]);
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
             this.gl.bindVertexArray(null);
+		
+		console.log(this.shader[selected_shader]);
 
         }
 
