@@ -154,8 +154,8 @@ class GlApp {
             this.gl.uniform3fv(this.shader[selected_shader].uniform.light_ambient, this.scene.light.ambient)
 	    for (let j = 0; j < this.scene.light.point_lights.length; j ++)
 	    {
-            	this.gl.uniform3fv(this.shader[selected_shader].uniform.light_position[j], this.scene.light.point_lights[j].position)
-            	this.gl.uniform3fv(this.shader[selected_shader].uniform.light_color[j], this.scene.light.point_lights[j].color)
+            	this.gl.uniform3fv(this.shader[selected_shader].uniform.light_position[j], this.scene.light.point_lights[j].position);
+            	this.gl.uniform3fv(this.shader[selected_shader].uniform.light_color[j], this.scene.light.point_lights[j].color);
 	    }
 	    this.gl.uniform3fv(this.shader[selected_shader].uniform.camera_position, this.scene.camera.position)
             this.gl.uniform1f(this.shader[selected_shader].uniform.material_shininess, this.scene.models[i].material.shininess);
