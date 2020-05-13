@@ -26,7 +26,7 @@ void main() {
     vec3 normal = normalize(frag_normal);
     vec3 diffuse = vec3(0,0,0);
     vec3 specular = vec3(0,0,0);
-    for (int i = 1; i < lightCount; i++)
+    for (int i = 0; i < lightCount; i++)
     {
         vec3 lightDirection = normalize(light_position[i] - frag_pos);
         diffuse = diffuse + light_color[i] * material_color * max(dot(normal, lightDirection), 0.0);
