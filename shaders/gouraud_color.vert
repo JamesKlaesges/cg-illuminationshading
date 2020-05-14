@@ -40,8 +40,8 @@ void main() {
         
     }
     //Cap colors
-    ambient = max(ambient, 0.0);
-    diffuse = max(diffuse, 0.0);
-    specular = max(specular, 0.0);
+    ambient = clamp(ambient, 0.0, 1.0);
+    diffuse = clamp(diffuse, 0.0, 1.0);
+    specular = clamp(specular, 0.0, 1.0);
 }
 
