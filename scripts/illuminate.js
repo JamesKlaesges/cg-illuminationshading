@@ -90,7 +90,7 @@ class GlApp {
     // create a texture, and upload a temporary 1px white RGBA array [255,255,255,255]
     let texture = this.gl.createTexture();
 
-	console.log(image_url);	
+	//console.log(image_url);	
 	//Bind texture
 	this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
 	    
@@ -119,8 +119,8 @@ class GlApp {
     }
 
     UpdateTexture(texture, image_element) {
-	console.log(image_element);
-	console.log(texture);
+	//console.log(image_element);
+	//console.log(texture);
     
     // bind texture
     this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
@@ -132,14 +132,14 @@ class GlApp {
     Render() {
         // delete previous frame (reset both framebuffer and z-buffer)
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-        console.log(scene);
+        //console.log(scene);
         // draw all models
         for (let i = 0; i < this.scene.models.length; i ++) {
 		
 	        //Get selected shader
             var selected_shader = this.algorithm + "_" + this.scene.models[i].shader;
             this.gl.useProgram(this.shader[selected_shader].program);
-            console.log(selected_shader);
+            //console.log(selected_shader);
             
 
             // transform model to proper position, size, and orientation
@@ -182,7 +182,7 @@ class GlApp {
             this.gl.drawElements(this.gl.TRIANGLES, this.vertex_array[this.scene.models[i].type].face_index_count, this.gl.UNSIGNED_SHORT, 0);
             this.gl.bindVertexArray(null);
 		
-		console.log(this.shader[selected_shader]);
+		//console.log(this.shader[selected_shader]);
 
         }
 
